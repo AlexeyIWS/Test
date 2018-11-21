@@ -1,7 +1,5 @@
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
 //apply plugin: 'maven'
-//apply plugin: 'org.jetbrains.dokka-android'
 
 android {
     compileSdkVersion 28
@@ -10,9 +8,10 @@ android {
         minSdkVersion 14
         targetSdkVersion 28
         versionCode 1
-        versionName "1.22"
+        versionName "2.14"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
     }
 
     buildTypes {
@@ -26,27 +25,30 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.google.android.material:material:1.0.0'
-    implementation 'androidx.appcompat:appcompat:1.0.0'
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-}
-repositories {
-    mavenCentral()
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.ironwaterstudio.android:snackbarutils:1.6'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }
 apply from: '../maven.gradle'
-/*task sourcesJar(type: Jar) {
+/*
+task sourcesJar(type: Jar) {
     classifier = 'sources'
     from rootProject.file("$project.name/src/main/java")
 }
 
-task dokkaJavadoc(type: dokka.getClass()) {
-    outputFormat = 'javadoc'
-    outputDirectory = "$buildDir/javadoc"
+// https://medium.com/@hamen/android-library-aar-and-javadoc-6859898cad28
+task javadoc(type: Javadoc) {
+    failOnError false
+    source = android.sourceSets.main.java.sourceFiles
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    classpath += configurations.compile
 }
 
-task javadocJar(type: Jar, dependsOn: dokkaJavadoc) {
+task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
-    from "$buildDir/javadoc"
+    from javadoc.destinationDir
 }
 
 uploadArchives {
@@ -54,8 +56,8 @@ uploadArchives {
         mavenDeployer {
             repository(url: "file://d:/maven/")
             pom.groupId = 'com.ironwaterstudio.android'
-            pom.version = '1.21'
-            pom.artifactId = 'snackbarutils'
+            pom.version = '2.13'
+            pom.artifactId = 'toastutils'
         }
     }
 }
@@ -63,4 +65,5 @@ uploadArchives {
 artifacts {
     archives sourcesJar
     archives javadocJar
-}*/
+}
+*/

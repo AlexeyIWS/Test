@@ -1,0 +1,21 @@
+apply plugin: 'maven'
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from rootProject.file("$project.name/src/main/java")
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "file://d:/maven/")
+            pom.groupId = 'com.ironwaterstudio.android'
+            pom.version = android.defaultConfig.versionName
+            pom.artifactId = project.name
+        }
+    }
+}
+
+artifacts {
+    archives sourcesJar
+}
